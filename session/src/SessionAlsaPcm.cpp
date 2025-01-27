@@ -809,6 +809,7 @@ int SessionAlsaPcm::populateECMFCPayload(Stream *s, size_t *payloadSize, uint8_t
         }
 
         if ((dAttr.id == PAL_DEVICE_IN_BLUETOOTH_A2DP) ||
+                (dAttr.id == PAL_DEVICE_IN_BLUETOOTH_BLE) ||
                 (dAttr.id == PAL_DEVICE_IN_BLUETOOTH_SCO_HEADSET)) {
             struct pal_media_config codecConfig;
             status = associatedDevices[i]->getCodecConfig(&codecConfig);
