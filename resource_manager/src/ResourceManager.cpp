@@ -5448,6 +5448,11 @@ void  ResourceManager::checkSpeakerConcurrency(struct pal_device *deviceattr,
                     PAL_ERR(LOG_TAG, "Getting Device instance failed");
                     continue;
                 }
+                //This is intent to check if any wired headset/headphones active streams only, so ignoring other devices’ active streams
+                if (( curDevAttr->id != PAL_DEVICE_OUT_WIRED_HEADSET) && ( curDevAttr->id != PAL_DEVICE_OUT_WIRED_HEADPHONE)) {
+                    PAL_INFO(LOG_TAG, "Shared BE device[%d] not wired headset, ignore",  curDevAttr->id);
+                    continue;
+                }
                 curDev->getDeviceAttributes(curDevAttr);
                 if (((curDevAttr->config.sample_rate % SAMPLINGRATE_44K == 0) &&
                     (sAttr->out_media_config.sample_rate % SAMPLINGRATE_44K != 0)) ||
@@ -6492,7 +6497,7 @@ void ResourceManager::getSharedBEActiveStreamDevs(std::vector <std::tuple<Stream
                     (*it)->getAssociatedDevices(devices);
                     typename std::vector<std::shared_ptr<Device>>::iterator result =
                              std::find(devices.begin(), devices.end(), dev);
-                    if (result != devices.end())
+                    if ((result != devices.end()) && (i == dev_id))
                         activeStreams.push_back(*it);
                 }
                 PAL_DBG(LOG_TAG, "got dev %d active streams on dev is %zu", i, activeStreams.size() );

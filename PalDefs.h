@@ -1118,6 +1118,7 @@ typedef struct pal_param_btsco {
     int    bt_swb_speech_mode;
     bool   bt_lc3_speech_enabled;
     btsco_lc3_cfg_t lc3_cfg;
+    bool   is_bt_hfp;
 } pal_param_btsco_t;
 
 /* Payload For ID: PAL_PARAM_ID_BT_A2DP*
@@ -1133,6 +1134,8 @@ typedef struct pal_param_bta2dp {
     bool     is_force_switch;
     uint32_t latency;
     pal_device_id_t   dev_id;
+    bool     is_suspend_setparam;
+    bool     is_in_call;
 } pal_param_bta2dp_t;
 
 typedef struct pal_param_upd_event_detection {
